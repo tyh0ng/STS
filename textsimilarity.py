@@ -1,8 +1,12 @@
 from sklearn.metrics.pairwise import paired_cosine_distances
 from sentence_transformers import SentenceTransformer, util
 import csv
+import torch
 
 model = SentenceTransformer("xlm-r-distilroberta-base-paraphrase-v1")
+if torch.cuda.is_available():
+  model.cuda()
+  print('Using GPU')
 # model = SentenceTransformer("distiluse-base-multilingual-cased-v2")
 # model = SentenceTransformer("xlm-r-bert-base-nli-stsb-mean-tokens")
 # model = SentenceTransformer("distilbert-multilingual-nli-stsb-quora-ranking")
@@ -15,7 +19,7 @@ trg_sentences = []
 for row in read_tsv:
   src_sentences.append(row[0])
   trg_sentences.append(row[1])
-batch_size = 4
+batch_size = 500
 embeddings1 = model.encode(src_sentences, batch_size=batch_size, show_progress_bar=True,
                            convert_to_numpy=True)
 embeddings2 = model.encode(trg_sentences, batch_size=batch_size, show_progress_bar=True,
