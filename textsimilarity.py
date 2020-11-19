@@ -11,7 +11,7 @@ if torch.cuda.is_available():
 # model = SentenceTransformer("xlm-r-bert-base-nli-stsb-mean-tokens")
 # model = SentenceTransformer("distilbert-multilingual-nli-stsb-quora-ranking")
 # model = SentenceTransformer("LaBSE")
-tsv_file = open('train-hotels-es.csv')
+tsv_file = open('train-restaurants-es.csv')
 read_tsv = csv.reader(tsv_file, delimiter=",")
 src_sentences = []
 trg_sentences = []
@@ -28,7 +28,7 @@ cosine_scores = 1 - (paired_cosine_distances(embeddings1, embeddings2))
 print('cosine_scores', cosine_scores)
 
 # name of csv file  
-filename = "train-hotels-es-sts-scores.csv"
+filename = "train-restaurants-es-sts-scores.csv"
     
 # writing to csv file  
 with open(filename, 'w') as csvfile:  
